@@ -10,3 +10,5 @@ Dijkstra :  Đường đi ngắn nhất    https://vi.wikipedia.org/wiki/Thu%E1%
 EulerTfunc: Phi hàm Euler         https://vi.wikipedia.org/wiki/Phi_h%C3%A0m_Euler
 
 Manacher :  Dãy đối xứng dài nhất http://articles.leetcode.com/longest-palindromic-substring-part-ii
+
+Euclid_equatirn:  Phương trình Euclid https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm
