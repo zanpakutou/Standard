@@ -12,3 +12,9 @@ EulerTfunc: Phi hàm Euler         https://vi.wikipedia.org/wiki/Phi_h%C3%A0m_Eu
 Manacher :  Dãy đối xứng dài nhất http://articles.leetcode.com/longest-palindromic-substring-part-ii
 
 Euclid_equatirn:  Phương trình Euclid https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm
+
+GrahamScan:  Tìm Bao Lồi          https://en.wikipedia.org/wiki/Graham_scan
+
+TopoSort:   Sắp xếp theo thứ tự topo  https://vi.wikipedia.org/wiki/S%E1%BA%AFp_x%E1%BA%BFp_t%C3%B4_p%C3%B4
+
+ClosestPoint: Tìm 2 điểm gần có khoảng cách ngắn nhất.
