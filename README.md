@@ -18,3 +18,5 @@ GrahamScan:  Tìm Bao Lồi          https://en.wikipedia.org/wiki/Graham_scan
 TopoSort:   Sắp xếp theo thứ tự topo  https://vi.wikipedia.org/wiki/S%E1%BA%AFp_x%E1%BA%BFp_t%C3%B4_p%C3%B4
 
 ClosestPoint: Tìm 2 điểm gần có khoảng cách ngắn nhất.
+
+Gauss : Giải HPT bằng phân rã ma trận https://vi.wikipedia.org/wiki/Ph%C3%A9p_kh%E1%BB%AD_Gauss
