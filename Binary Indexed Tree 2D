@@ -1,0 +1,41 @@
+//nkmobile spoj
+#include<bits/stdc++.h>
+using namespace std;
+
+const int N = 1056;
+int type, x, y, val, u, v, n;
+int node[N][N];
+
+void update(int x, int y, int val) {
+   for (int i = x; i <= n; i += i & (-i))
+      for (int j = y; j <= n; j += j & (-j)) node[i][j] += val;
+}
+
+int get(int x, int y) {
+   int ans = 0;
+   for (int i = x; i; i -= i & (-i))
+      for (int j = y; j; j -= j & (-j)) ans += node[i][j];
+   return ans;
+}
+
+int main() {
+   ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+   //freopen("spoj.inp", "r", stdin);
+   //freopen("spoj.out", "w", stdout);
+
+   while (cin >> type) {
+      if (type == 0) cin >> n, ++n;
+      else if (type == 1) {
+         cin >> x >> y >> val;
+         update(x+1, y+1, val);
+      }
+      else if (type == 2) {
+         cin >> x >> y >> u >> v;
+         //int tmp = get(u, v);
+         cout << get(u+1, v+1) - get(u+1, y-1+1) - get(x-1+1, v+1) + get(x-1+1, y-1+1) << '\n';
+      }
+      else return 0;
+   }
+
+   return 0;
+}
