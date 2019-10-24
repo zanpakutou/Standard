@@ -1,0 +1,79 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+void minimize(int &a, int b) { a = min(a, b); }
+void maximize(int &a, int b) { a = max(a, b); }
+
+const int N = 1004, oo = 1e9 + 7;
+int n, m, S, T;
+vector<int> adj[N];
+int c[N][N], f[N][N];
+
+int d[N];
+queue<int> Q;
+
+bool BFS() { 
+	for (int i = 1; i <= n; ++i) d[i] = -1; d[S] = 0;
+	Q.push(S); 
+	while (Q.size()) {
+		int u = Q.front(); Q.pop();
+		for (int v : adj[u]) {
+			if (f[u][v] >= c[u][v] || d[v] != -1) continue;
+			d[v] = d[u] + 1;
+			Q.push(v);
+		}
+	}
+	return (d[T] != -1);
+}
+
+int vis[N], Time;
+
+int DFS(int u, int minVal) {
+	if (u == T) return minVal; 
+	// if (vis[u] == Time) return 0;
+	vis[u] = Time;
+
+	for (int v : adj[u]) {
+		if (f[u][v] >= c[u][v]) continue;
+		if (vis[v] == Time || d[v] != d[u] + 1) continue;
+		int tmp = DFS(v, min(minVal, c[u][v] - f[u][v]));
+		if (tmp <= 0) continue; 
+		f[u][v] += tmp; f[v][u] -= tmp; 		
+		return tmp;
+	}
+
+	return 0;
+}	
+
+void sol() {
+	int res = 0;
+	while (BFS()) {
+		while (true) {
+				// cerr << "# dm \n";
+			++Time;
+			int flow = DFS(S, oo);
+			if (flow <= 0) break;
+			res += flow; 
+		}
+	}
+	cout << res << '\n';
+}	
+
+int main() {
+	ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+	if (fopen("input.txt", "r")) {
+		freopen("input.txt", "r", stdin);
+	}
+
+	cin >> n >> m >> S >> T;
+	int u, v, w;
+	for (int i = 1; i <= m; ++i) {
+		cin >> u >> v >> w;
+		adj[u].push_back(v); adj[v].push_back(u);
+		c[u][v] += w;
+	}
+
+	sol();
+
+	return 0;
+}
