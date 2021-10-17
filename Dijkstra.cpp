@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 
-using namespace std;
+using namespace std; 
 
 typedef pair< int, int > ii;
 
@@ -37,7 +37,7 @@ int main()
     for(int i = 1; i<=m; i++)
     {
         cin>>u>>v>>c;
-        a[u].push_back(ii(v,c));
+        a[u].push_back(ii(v,c));;
         a[v].push_back(ii(u,c));
     }
     Dijtrka();
