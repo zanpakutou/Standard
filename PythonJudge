@@ -1,0 +1,131 @@
+# missing compile error
+
+import os
+import filecmp
+import threading
+
+cwd = os.getcwd();
+submit = cwd  + "\\" + "submit";
+test = cwd + "\\" + "test";
+time_limit = 2;
+
+def __Create_file__():
+	Result = cwd + "\\" + "result";
+	if not os.path.isdir(Result):
+		os.makedirs(Result);
+
+	Trash = cwd + "\\" + "trash";
+	if not os.path.isdir(Trash):
+		os.makedirs(Trash); 
+
+def Compile(prob):
+	ok = os.system("g++ " + prob + ".cpp -o " + prob);
+	return ok;
+
+stat = 0;
+
+def Run_cmd(cmd):
+	global stat;
+	stat = os.system(cmd);
+
+def Run(log, cmd, OUT, ANS):
+	Running = threading.Thread(target = Run_cmd, args = (cmd, ));
+	Running.setDaemon(True);
+	Running.start();
+	Running.join(time_limit);
+
+	if Running.isAlive():
+		# print("TIME LIMIT EXCEED");
+		log.write("TIME LIMIT EXCEED \n");
+		return 0;
+
+	if stat != 0:
+		# print("RUNTIME ERROR");
+		log.write("RUNTIME ERROR \n");
+		return 0;
+
+	if filecmp.cmp(OUT, ANS): 
+		# print("TRUE");
+		log.write("TRUE \n");
+		return 1;
+	else: 
+		# print("FALSE");
+		log.write("FALSE \n");
+		return 0;
+
+def judge(prob): 
+	print("JUDGE PROBLEM " + "'" + prob + "'" + ": (Y/N) ?", end = " ");
+	Start = input();
+	if (Start == "N"): 
+		return;  
+	
+	print("SET TIME LIMIT : ", end = " ");
+	String = input();
+	global time_limit;
+	time_limit = int(String) + 0.3;
+	print("");
+
+	curTest = test + "\\" + prob;
+	curSub = submit + "\\" + prob + ".exe";
+	FileCpp = submit + "\\" + prob + ".cpp";
+
+	if not os.path.exists(FileCpp):
+		print("NO SUBMISSiON FOR THIS PROBLEM");
+		return;
+
+	Execute_file = submit + "\\" + prob;
+	Compile(submit + "\\" + prob);
+
+	num = 0;
+	res = 0;
+
+	link_result = cwd + "\\" + "result\\" + prob + ".log";
+	log = open(link_result, "w");
+
+	print("JUDGING ...");
+
+	for T in os.listdir(curTest):
+		link = curTest + "\\" + T;
+		if not os.path.isdir(link): 
+			continue;
+
+		num = num + 1;
+
+		# print(T, end = ": ");
+		log.write(T + ": ");
+
+		ls_data = [];
+		for files in os.listdir(link):
+			tmp = link + "\\" + files;
+			ls_data.append(tmp);
+
+		INP = ls_data[0];
+		OUT = ls_data[1];
+		ANS = cwd + "\\" + "trash" + "\\" + prob + ".ans";
+
+		cmd = curSub + " < " + INP + " > " + ANS;
+
+		res += Run(log, cmd, OUT, ANS);
+	
+	print("JUDGING DONE");
+	print("");
+	print("YOUR SCORE : " + str(res) + " / " + str(num));
+	print("");
+
+	log.write("YOUR SCORE : " + str(res) + " / " + str(num) + "\n");
+	log.close();
+
+def main():
+	__Create_file__();
+
+	ls_probs = [];
+	for probs in os.listdir(test):
+		link = test + "\\" + probs;
+		if (os.path.isdir(link)): 
+			ls_probs.append(probs);
+
+	for prob in ls_probs:
+		judge(prob);
+
+if __name__ == '__main__':
+	main();
